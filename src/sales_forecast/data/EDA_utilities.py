@@ -1,6 +1,7 @@
 import pandas as pd
 import scipy.stats as st
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 def get_missing_days_info(missing_days: list):
