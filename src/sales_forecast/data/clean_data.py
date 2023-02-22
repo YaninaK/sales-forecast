@@ -29,3 +29,21 @@ def impute_by_regression(correlated_shops: dict, df: pd.DataFrame) -> pd.DataFra
         df.loc[df[i].isnull(), i] = predictions
 
     return df
+
+
+def clean_outliers(df: pd.DataFrame) -> pd.DataFrame:
+    stats = df.describe()
+    iqr = stats.loc["75%"] - stats.loc["25%"]
+    outliers_level_lower = stats.loc["25%"] - 1.5 * iqr
+    outliers_level_upper = stats.loc["75%"] + 1.5 * iqr
+
+    n_outliers = (df > outliers_level_upper).sum().sum() + (
+        df < outliers_level_lower
+    ).sum().sum()
+
+    for i in range(n_shops):
+        df = np.clip(df, outliers_level_lower[i], outliers_level_upper[i])
+
+    print(f"Number of outliers = {n_outliers}")
+
+    return df
