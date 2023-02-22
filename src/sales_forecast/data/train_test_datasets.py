@@ -4,7 +4,7 @@ import numpy as np
 from typing import Optional, Tuple
 
 
-__all__ = ["build_train_datset_for_LSTM_model"]
+__all__ = ["train_test_datsets_for_LSTM_model"]
 
 logger = logging.getLogger()
 
@@ -55,3 +55,36 @@ def get_train_dataset(
             y_train.append(output_)
 
     return np.array(X_train), np.array(y_train)
+
+
+def get_test_dataset(X, 
+    input_sequence_length: Optional[int] = None,
+    output_sequence_length: Optional[int] = None,
+    final: Optional[bool] = None,
+):
+    logging.info("Generating test datasets for LSTM model...")
+
+    if input_sequence_length is None:
+        input_sequence_length = INPUT_SEQUENCE_LENGTH
+    if output_sequence_length is None:
+        output_sequence_length = OUTPUT_SEQUENCE_LENGTH
+    if final is None:
+        final = FINAL
+
+    X_test, y_test = [], []
+    if final:    
+        for j in range(X.shape[1]):
+            input_ = X[-input_sequence_length:, j, :]
+            X_test.append(input_)
+
+        return np.array(X_test)
+    
+    t0 = X.shape[0] - (input_sequence_length + output_sequence_length)
+    t1 = t0 + input_sequence_length
+    for j in range(X.shape[1]):
+        input_ = X[t0 : t1, j, :]
+        output_ = X[t1:, j, :]
+        X_test.append(input_)
+        y_test.append(output_)
+
+    return np.array(X_test), np.array(y_test)
