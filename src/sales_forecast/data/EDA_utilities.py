@@ -1,6 +1,7 @@
 import pandas as pd
 import scipy.stats as st
 from tqdm import tqdm
+from tslearn.clustering import TimeSeriesKMeans, silhouette_score
 from typing import Optional
 import matplotlib.pyplot as plt
 import seaborn as sns
