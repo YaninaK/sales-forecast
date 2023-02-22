@@ -1,5 +1,13 @@
+import logging
 import pandas as pd
 from sklearn.linear_model import LinearRegression
+from typing import Optional
+
+__all__ = ["clean_data"]
+
+logger = logging.getLogger()
+
+N_SHOPS = 20
 
 
 def impute_with_medians(
@@ -8,6 +16,8 @@ def impute_with_medians(
     """
     Imputes values in missing_dates with medians for particular year-month-weekday
     """
+    logging.info("Imputeing missing values with medians...")
+
     medians = pd.DataFrame(index=cols, columns=missing_dates)
     for i in missing_dates:
         cond_1 = df.index.year == i.year
@@ -21,6 +31,9 @@ def impute_with_medians(
 
 
 def impute_by_regression(correlated_shops: dict, df: pd.DataFrame) -> pd.DataFrame:
+
+    logging.info("Imputeing missing values by regression...")
+
     for i in correlated_shops.keys():
         cols = correlated_shops[i]
         model = LinearRegression()
@@ -31,7 +44,13 @@ def impute_by_regression(correlated_shops: dict, df: pd.DataFrame) -> pd.DataFra
     return df
 
 
-def clean_outliers(df: pd.DataFrame) -> pd.DataFrame:
+def clean_outliers(df: pd.DataFrame, n_shops: Optional[int] = None) -> pd.DataFrame:
+
+    logging.info("Cleaning outliers...")
+
+    if n_shops is None:
+        n_shops = N_SHOPS
+
     stats = df.describe()
     iqr = stats.loc["75%"] - stats.loc["25%"]
     outliers_level_lower = stats.loc["25%"] - 1.5 * iqr
