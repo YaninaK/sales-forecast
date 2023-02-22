@@ -32,12 +32,12 @@ class JohnsonSU:
 
     def fit(self, X):
         X = X.copy()
-        for i in range(n_shops):
+        for i in range(self.n_shops):
             self.johnsonsu_params[i] = st.johnsonsu.fit(X[i])
 
     def transform(self, X):
         X = X.copy()
-        for i in range(n_shops):
+        for i in range(self.n_shops):
             a, b, loc, scale = self.johnsonsu_params[i]
             X[i] = X[i].apply(self.johnsonsu_transform, args=(a, b, loc, scale))
 
@@ -45,7 +45,7 @@ class JohnsonSU:
 
     def inv_transform(self, X):
         X = X.copy()
-        for i in range(n_shops):
+        for i in range(self.n_shops):
             a, b, loc, scale = self.johnsonsu_params[i]
             X[i] = X[i].apply(self.johnsonsu_inv_transform, args=(a, b, loc, scale))
 
