@@ -1,8 +1,10 @@
 import pandas as pd
 import scipy.stats as st
 from tqdm import tqdm
+from typing import Optional
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 
 DEFAULT_RANDOM_SEED = 25
 
