@@ -1,7 +1,10 @@
 import pandas as pd
 import scipy.stats as st
+from tqdm import tqdm
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+DEFAULT_RANDOM_SEED = 25
 
 
 def get_missing_days_info(missing_days: list):
@@ -50,7 +53,9 @@ def get_distribution(data: pd.DataFrame, shop: int):
     plt.show()
 
 
-def get_n_clusters(ts_scaled, metric="euclidean", random_state=25):
+def get_n_clusters(
+    ts_scaled: pd.DataFrame, metric="euclidean", random_state: Optional[int] = None
+):
     """
     silhouette_score calculates how clean the clusters are:
     https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html
@@ -60,6 +65,9 @@ def get_n_clusters(ts_scaled, metric="euclidean", random_state=25):
 
     distortions - sum of sq. distances from objects to the center of the cluster, weighted if weights are available
     """
+    if random_state is None:
+        random_state = DEFAULT_RANDOM_SEED
+
     distortions = []
     silhouette = []
     K = range(2, 10)
