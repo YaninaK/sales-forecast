@@ -16,7 +16,7 @@ def train_validation_split(
     output_sequence_length: Optional[int] = None,
     shift: Optional[int] = None,
     n: Optional[int] = None,
-) -> Tuple(pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame):
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """
     1st half of 2016 and 1st half of 2017
 
