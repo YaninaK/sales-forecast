@@ -42,6 +42,7 @@ def impute(
         correlated_shops = CORRELATED_SHOPS
 
     for missing_dates, shops in impute_dates_shops:
+        missing_dates = [pd.to_datetime(t) for t in missing_dates]
         data = impute_with_medians(missing_dates, shops, data)
 
     for i in range(len(correlated_shops)):
@@ -50,15 +51,12 @@ def impute(
     return data
 
 
-def impute_with_medians(
-    missing_dates, cols, df: pd.DataFrame
-) -> pd.DataFrame:
+def impute_with_medians(missing_dates, cols, df: pd.DataFrame) -> pd.DataFrame:
     """
     Imputes values in missing_dates with medians for particular year-month-weekday
     """
     logging.info("Imputeing missing values with medians...")
 
-    missing_dates = [pd.to_datetime(t) for t in missing_dates]
     medians = pd.DataFrame(index=cols, columns=missing_dates)
     for i in missing_dates:
         cond_1 = df.index.year == i.year
