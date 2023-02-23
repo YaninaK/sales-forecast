@@ -30,5 +30,6 @@ def get_clusters(
     clusters = pd.DataFrame(
         data=ts_dtw.labels_, index=range(n_shops), columns=["cluster"]
     )
+    clusters = pd.get_dummies(clusters["cluster"])
 
     return clusters
