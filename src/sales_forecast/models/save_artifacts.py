@@ -48,9 +48,14 @@ def save_time_split(
     if valid_df_past_path is None:
         valid_df_past_path = path + VALID_DF_PAST_PATH
 
+    cols = [str(i) for i in range(data.shape[1])]
+    train_df.columns = cols
     train_df.to_parquet(train_df_path, compression="gzip")
+    valid_df.columns = cols
     valid_df.to_parquet(valid_df_path, compression="gzip")
+    train_df_past.columns = cols
     train_df_past.to_parquet(train_df_past_path, compression="gzip")
+    valid_df_past.columns = cols
     valid_df_past.to_parquet(valid_df_past_path, compression="gzip")
 
 
