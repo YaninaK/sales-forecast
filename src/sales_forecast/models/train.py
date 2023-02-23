@@ -56,9 +56,9 @@ def data_preprocessing_pipeline(
     clusters = get_clusters(X_scaled)
 
     extracted_features = get_tsfresh_features(X_scaled)
+    extracted_features = pd.concat([clusters, extracted_features_scaled], axis=1)
     sd_scaler = StandardScaler()
     extracted_features_scaled = sd_scaler.fit_transform(extracted_features)
-    extracted_features = pd.concat([clusters, extracted_features_scaled], axis=1)
 
     X = get_features(X_scaled, X_past_scaled, extracted_features_scaled)
 
