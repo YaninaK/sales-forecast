@@ -39,7 +39,6 @@ def data_preprocessing_pipeline(
 
     data = get_dataset(data)
     data = impute(data)
-    data.columns = [str(i) for i in range(data.shape[1])]
     train_df, valid_df, train_df_past, valid_df_past = train_validation_split(data)
 
     scaler_js = JohnsonSU()
