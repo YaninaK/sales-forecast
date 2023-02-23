@@ -80,6 +80,8 @@ def save_clusters(
     if clusters_path is None:
         clusters_path = path + CLUSTERS_PATH
 
+    cols = [str(i) for i in range(clusters.shape[1])]
+    clusters.columns = cols
     clusters.to_parquet(clusters_path, compression="gzip")
 
 
@@ -93,6 +95,8 @@ def save_extracted_features(
     if extracted_features_path is None:
         extracted_features_path = path + EXTRACTED_FEATURES_PATH
 
+    cols = [str(i) for i in range(extracted_features.shape[1])]    
+    extracted_features.to_parquet(extracted_features_path, compression="gzip")
 
 def save_train_dataset(
     X, path: Optional[str] = None, train_dataset_path: Optional[str] = None
