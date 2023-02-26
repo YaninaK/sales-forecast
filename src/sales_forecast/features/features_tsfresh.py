@@ -5,7 +5,7 @@ from tsfresh.utilities.dataframe_functions import impute
 from tsfresh.feature_extraction import settings
 from typing import Optional
 
-__all__ = ["clean_data"]
+__all__ = ["get_tsfresh_features"]
 
 logger = logging.getLogger()
 
