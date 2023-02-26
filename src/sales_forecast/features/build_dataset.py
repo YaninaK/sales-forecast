@@ -10,6 +10,7 @@ logger = logging.getLogger()
 def get_features(
     X_scaled: pd.DataFrame,
     X_past_scaled: pd.DataFrame,
+    fourier_features,
     extracted_features: pd.DataFrame,
 ) -> pd.DataFrame:
     """
@@ -29,6 +30,6 @@ def get_features(
     for i in range(X2.shape[0]):
         X2[i, :, :] = extracted_features
 
-    X = np.concatenate([X1, X2], axis=2)
+    X = np.concatenate([X1, fourier_features, X2], axis=2)
 
     return X
