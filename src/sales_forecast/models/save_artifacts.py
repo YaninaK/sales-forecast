@@ -22,6 +22,7 @@ SCALER_JS_PATH = FOLDER_2 + "scaler_js.joblib"
 
 FOLDER_3 = "data/04_feature/"
 CLUSTERS_PATH = FOLDER_3 + "clusters.parquet.gzip"
+FOURIER_FEATURES_PATH = FOLDER_3 + "fourier_features"
 EXTRACTED_FEATURES_PATH = FOLDER_3 + "extracted_features.parquet.gzip"
 TRAIN_DATASET_PATH = FOLDER_3 + "train_dataset"
 
@@ -95,8 +96,22 @@ def save_extracted_features(
     if extracted_features_path is None:
         extracted_features_path = path + EXTRACTED_FEATURES_PATH
 
-    cols = [str(i) for i in range(extracted_features.shape[1])]    
+    cols = [str(i) for i in range(extracted_features.shape[1])]
     extracted_features.to_parquet(extracted_features_path, compression="gzip")
+
+
+def save_fourier_features(
+    fourier_features,
+    path: Optional[str] = None,
+    fourier_features_path: Optional[str] = None,
+):
+    if path is None:
+        path = PATH
+    if fourier_features_path is None:
+        fourier_features_path = path + FOURIER_FEATURES_PATH
+
+    np.save(fourier_features_path, fourier_features)
+
 
 def save_train_dataset(
     X, path: Optional[str] = None, train_dataset_path: Optional[str] = None
