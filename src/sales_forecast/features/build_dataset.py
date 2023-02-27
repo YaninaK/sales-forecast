@@ -24,7 +24,12 @@ def get_features(
 
     a = X_scaled.values
     b = X_past_scaled.values
-    X1 = np.vstack([a, b, a - b]).reshape(3, -1, X_scaled.shape[1])
+
+    n = 6
+    c = np.empty((X_scaled.shape[0], X_scaled.shape[1]))
+    c[n:, :] = X_scaled.iloc[:-n, :]
+
+    X1 = np.vstack([a, b, a - b, c]).reshape(4, -1, X_scaled.shape[1])
     X1 = np.moveaxis(X1, 0, -1)[-time_seq:, :, :]
 
     X2 = get_1st_differences(X_scaled)
