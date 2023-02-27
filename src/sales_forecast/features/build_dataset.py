@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import scipy.stats as st
 
+
 __all__ = ["build_dataset"]
 
 logger = logging.getLogger()
@@ -30,7 +31,7 @@ def get_features(
     X5 = get_rolling_means(X_scaled)
 
     time_seq = X_scaled.shape[0] - 1
-    X6 = clusters.repeat(time_seq, axis=0).reshape(
+    X6 = clusters.values.repeat(time_seq, axis=0).reshape(
         -1, clusters.shape[0], clusters.shape[1]
     )
     X7 = extracted_features_scaled.repeat(time_seq, axis=0).reshape(
