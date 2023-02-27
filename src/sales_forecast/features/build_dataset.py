@@ -36,12 +36,12 @@ def get_features(
     X6 = clusters.values.repeat(time_seq, axis=0).reshape(
         clusters.shape[0], -1, clusters.shape[1]
     )
-    X6 = np.moveaxis(X6, 1, -1)
+    X6 = np.moveaxis(X6, 1, 0)
 
     X7 = extracted_features_scaled.repeat(time_seq, axis=0).reshape(
         extracted_features_scaled.shape[0], -1, extracted_features_scaled.shape[1]
     )
-    X7 = np.moveaxis(X7, 1, -1)
+    X7 = np.moveaxis(X7, 1, 0)
 
     return np.concatenate([X1, X2, X3, X4, X5, X6, X7], axis=-1)
 
