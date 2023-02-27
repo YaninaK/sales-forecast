@@ -13,7 +13,7 @@ def get_features(
     X_scaled: pd.DataFrame,
     X_past_scaled: pd.DataFrame,
     clusters: pd.DataFrame,
-    extracted_features: pd.DataFrame,
+    extracted_features_scaled: np.array,
 ) -> np.array:
     """
     Builds dataset for LSTM model
@@ -35,7 +35,7 @@ def get_features(
         -1, clusters.shape[0], clusters.shape[1]
     )
     X7 = extracted_features_scaled.repeat(time_seq, axis=0).reshape(
-        -1, extracted_features.shape[0], extracted_features.shape[1]
+        -1, extracted_features_scaled.shape[0], extracted_features_scaled.shape[1]
     )
 
     return np.concatenate([X1, X2, X3, X4, X5, X6, X7], axis=-1)
