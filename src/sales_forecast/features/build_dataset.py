@@ -55,7 +55,7 @@ def get_1st_differences(X_scaled: pd.DataFrame, periods=["D", "W", "M"]) -> np.a
         X = pd.DataFrame(np.hstack([X1, X2]), index=a1.index[1:])
         df = df.merge(X, on="dt", how="left").bfill().ffill()
 
-        X = df.values.reshape(-1, 6, X_scaled.shape[1])
+        X = df.values.reshape(len(df), -1, X_scaled.shape[1])
 
     return np.moveaxis(X, 1, -1)
 
@@ -68,7 +68,7 @@ def get_2nd_differences(X_scaled: pd.DataFrame, periods=["W", "M"]) -> np.array:
         X = pd.DataFrame(X[1:, :] - X[:-1, :], index=a1.index[2:])
         df = df.merge(X, on="dt", how="left").bfill().ffill()
 
-        X = df.values.reshape(-1, 2, X_scaled.shape[1])
+        X = df.values.reshape(len(df), -1, X_scaled.shape[1])
 
     return np.moveaxis(X, 1, -1)
 
@@ -91,7 +91,7 @@ def get_moments(X_scaled: pd.DataFrame, periods=["W", "M"]) -> np.array:
         ).bfill()
     df = pd.DataFrame(index=X_scaled.index[1:]).merge(df, on="dt", how="left")
 
-    X = df.values.reshape(-1, 12, X_scaled.shape[1])
+    X = df.values.reshape(len(df), -1, X_scaled.shape[1])
 
     return np.moveaxis(X, 1, -1)
 
@@ -103,6 +103,6 @@ def get_rolling_means(X_scaled: pd.DataFrame, windows=[6, 24]) -> np.array:
         df = pd.concat([df, X_scaled.rolling(w).mean()], axis=1).bfill()
     df = pd.DataFrame(index=X_scaled.index[1:]).merge(df, on="dt", how="left")
 
-    X = df.values.reshape(-1, 2, X_scaled.shape[1])
+    X = df.values.reshape(len(df), -1, X_scaled.shape[1])
 
     return np.moveaxis(X, 1, -1)
