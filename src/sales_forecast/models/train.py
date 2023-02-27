@@ -16,13 +16,11 @@ from data.validation import train_validation_split
 from data.johnson_su_transformation import JohnsonSU
 from data.clean_data import clean_outliers
 from features.time_series_clusters import get_clusters
-from features.features_tsfresh import get_tsfresh_features
 from features.build_dataset import get_features
 from .save_artifacts import (
     save_time_split,
     save_scaler_js,
     save_clusters,
-    save_extracted_features,
     save_train_dataset,
 )
 
@@ -54,18 +52,12 @@ def data_preprocessing_pipeline(
 
     clusters = get_clusters(X_scaled)
 
-    extracted_features = get_tsfresh_features(X_scaled)
-    extracted_features_combined = pd.concat([clusters, extracted_features], axis=1)
-    sd_scaler = StandardScaler()
-    extracted_features_scaled = sd_scaler.fit_transform(extracted_features_combined)
-
-    X = get_features(X_scaled, X_past_scaled, clusters, extracted_features_scaled)
+    X = get_features(X_scaled, X_past_scaled, clusters)
 
     if save_artifacts:
         save_time_split(train_df, valid_df, train_df_past, valid_df_past)
         save_scaler_js(scaler_js)
         save_clusters(clusters)
-        save_extracted_features(extracted_features)
         save_train_dataset(X)
 
     return X

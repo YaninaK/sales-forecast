@@ -22,7 +22,6 @@ SCALER_JS_PATH = FOLDER_2 + "scaler_js.joblib"
 
 FOLDER_3 = "data/04_feature/"
 CLUSTERS_PATH = FOLDER_3 + "clusters.parquet.gzip"
-EXTRACTED_FEATURES_PATH = FOLDER_3 + "extracted_features.parquet.gzip"
 TRAIN_DATASET_PATH = FOLDER_3 + "train_dataset"
 
 
@@ -83,20 +82,6 @@ def save_clusters(
     cols = [str(i) for i in range(clusters.shape[1])]
     clusters.columns = cols
     clusters.to_parquet(clusters_path, compression="gzip")
-
-
-def save_extracted_features(
-    extracted_features: pd.DataFrame,
-    path: Optional[str] = None,
-    extracted_features_path: Optional[str] = None,
-):
-    if path is None:
-        path = PATH
-    if extracted_features_path is None:
-        extracted_features_path = path + EXTRACTED_FEATURES_PATH
-
-    cols = [str(i) for i in range(extracted_features.shape[1])]
-    extracted_features.to_parquet(extracted_features_path, compression="gzip")
 
 
 def save_train_dataset(

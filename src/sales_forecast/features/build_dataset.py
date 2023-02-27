@@ -13,7 +13,6 @@ def get_features(
     X_scaled: pd.DataFrame,
     X_past_scaled: pd.DataFrame,
     clusters: pd.DataFrame,
-    extracted_features_scaled: np.array,
 ) -> np.array:
     """
     Builds dataset for LSTM model
@@ -38,12 +37,7 @@ def get_features(
     )
     X6 = np.moveaxis(X6, 1, 0)
 
-    X7 = extracted_features_scaled.repeat(time_seq, axis=0).reshape(
-        extracted_features_scaled.shape[0], -1, extracted_features_scaled.shape[1]
-    )
-    X7 = np.moveaxis(X7, 1, 0)
-
-    return np.concatenate([X1, X2, X3, X4, X5, X6, X7], axis=-1)
+    return np.concatenate([X1, X2, X3, X4, X5, X6], axis=-1)
 
 
 def get_1st_differences(X_scaled: pd.DataFrame, periods=["D", "W", "M"]) -> np.array:
