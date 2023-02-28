@@ -20,6 +20,7 @@ from features.build_dataset import get_features
 from .save_artifacts import (
     save_time_split,
     save_scaler_js,
+    save_preprocessed_data,
     save_clusters,
     save_train_dataset,
 )
@@ -57,6 +58,7 @@ def data_preprocessing_pipeline(
     if save_artifacts:
         save_time_split(train_df, valid_df, train_df_past, valid_df_past)
         save_scaler_js(scaler_js)
+        save_preprocessed_data(X_scaled, X_past_scaled)
         save_clusters(clusters)
         save_train_dataset(X)
 
