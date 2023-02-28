@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Train and save model for RecSys-retail"""
+"""Train and save model for sales forecast"""
 
 import sys
 import os
@@ -63,16 +63,18 @@ def train_store(model, X, filename: str, seed=25):
 
     X_train, y_train = get_train_dataset(X)
 
-    n_shops = X_train.shape[1]
-    n_epochs = 10
-    batch_size = 80
-    m = 4 * n_shops
+    n_shops = 20
+    n_epochs = 20
+    batch_size = 20
+    m = n_shops * 4
+
+    model = get_model_LSTM(n_features=X_train.shape[2], n_units=150)
 
     reduce_lr = tf.keras.callbacks.LearningRateScheduler(
         lambda epoch: 3e-2 * 0.95**epoch
     )
     model.compile(optimizer=tf.keras.optimizers.Adam(), loss=tf.keras.losses.Huber())
-    model.fit(
+    history = model.fit(
         X_train[:-m, :, :],
         y_train[:-m, :, :],
         epochs=n_epochs,
@@ -80,6 +82,7 @@ def train_store(model, X, filename: str, seed=25):
         batch_size=batch_size,
         verbose=1,
         callbacks=[reduce_lr],
+        shuffle=False,
     )
     store(model, filename)
 
