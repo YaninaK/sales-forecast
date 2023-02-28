@@ -85,7 +85,7 @@ def save_preprocessed_data(
     if X_past_scaled_path is None:
         X_past_scaled_path = path + X_PAST_SCALED_PATH
 
-    cols = [str(i) for i in range(train_df.shape[1])]
+    cols = [str(i) for i in range(X_scaled.shape[1])]
     X_scaled.columns = cols
     X_scaled.to_parquet(X_scaled_path, compression="gzip")
     X_past_scaled.columns = cols
