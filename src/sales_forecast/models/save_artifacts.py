@@ -21,6 +21,8 @@ FOLDER_2 = "data/03_primary/"
 SCALER_JS_PATH = FOLDER_2 + "scaler_js.joblib"
 
 FOLDER_3 = "data/04_feature/"
+X_SCALED_PATH = FOLDER_3 + "X_scaled.parquet.gzip"
+X_PAST_SCALED_PATH = FOLDER_3 + " X_past_scaled.parquet.gzip"
 CLUSTERS_PATH = FOLDER_3 + "clusters.parquet.gzip"
 TRAIN_DATASET_PATH = FOLDER_3 + "train_dataset"
 
@@ -67,6 +69,27 @@ def save_scaler_js(
         scaler_js_path = path + SCALER_JS_PATH
 
     joblib.dump(scaler_js, scaler_js_path, compress=3)
+
+
+def save_preprocessed_data(
+    X_scaled,
+    X_past_scaled,
+    path: Optional[str] = None,
+    X_scaled_path: Optional[str] = None,
+    X_past_scaled_path: Optional[str] = None,
+):
+    if path is None:
+        path = PATH
+    if X_scaled_path is None:
+        X_scaled_path = path + X_SCALED_PATH
+    if X_past_scaled_path is None:
+        X_past_scaled_path = path + X_PAST_SCALED_PATH
+
+    cols = [str(i) for i in range(train_df.shape[1])]
+    X_scaled.columns = cols
+    X_scaled.to_parquet(X_scaled_path, compression="gzip")
+    X_past_scaled.columns = cols
+    X_past_scaled.to_parquet(X_past_scaled_path, compression="gzip")
 
 
 def save_clusters(
