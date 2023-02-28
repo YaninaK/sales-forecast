@@ -48,16 +48,17 @@ def get_train_dataset(
     for t0 in list_train:
         t1 = t0 + input_sequence_length
         t2 = t1 + output_sequence_length
-        for j in range(X.shape[1]):
-            input_ = X[t0:t1, j, :]
-            output_ = X[t1:t2, j, :]
-            X_train.append(input_)
-            y_train.append(output_)
+        X_train.append(np.moveaxis(X[t0:t1, :, :], 0, 1))
+        y_train.append(np.moveaxis(X[t1:t2, :, :], 0, 1))
 
-    return np.array(X_train), np.array(y_train)
+    X_train = np.concatenate(X_train, axis=0)
+    y_train = np.concatenate(y_train, axis=0)
+
+    return X_train, y_train
 
 
-def get_test_dataset(X, 
+def get_test_dataset(
+    X,
     input_sequence_length: Optional[int] = None,
     output_sequence_length: Optional[int] = None,
     final: Optional[bool] = None,
@@ -71,20 +72,15 @@ def get_test_dataset(X,
     if final is None:
         final = FINAL
 
-    X_test, y_test = [], []
-    if final:    
-        for j in range(X.shape[1]):
-            input_ = X[-input_sequence_length:, j, :]
-            X_test.append(input_)
+    if final:
+        X_test = np.moveaxis(X[-input_sequence_length:, :, :], 0, 1)
 
-        return np.array(X_test)
-    
+        return X_test
+
     t0 = X.shape[0] - (input_sequence_length + output_sequence_length)
     t1 = t0 + input_sequence_length
-    for j in range(X.shape[1]):
-        input_ = X[t0 : t1, j, :]
-        output_ = X[t1:, j, :]
-        X_test.append(input_)
-        y_test.append(output_)
 
-    return np.array(X_test), np.array(y_test)
+    X_test = np.moveaxis(X[t0:t1, :, :], 0, 1)
+    y_test = np.moveaxis(X[t1:, :, :], 0, 1)
+
+    return X_test, y_test
