@@ -59,7 +59,7 @@ def get_1st_differences(X_scaled: pd.DataFrame, periods=["D", "W", "M"]) -> np.a
     return np.moveaxis(X, 1, -1)
 
 
-def get_2nd_differences(X_scaled: pd.DataFrame, periods=["W", "M"]) -> np.array:
+def get_2nd_differences(X_scaled: pd.DataFrame, periods=["W"]) -> np.array:
     df = pd.DataFrame(index=X_scaled.index[1:])
     for t in periods:
         a1 = X_scaled.resample(t).median()
