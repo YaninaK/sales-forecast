@@ -2,8 +2,7 @@ import logging
 import pandas as pd
 import numpy as np
 import scipy.stats as st
-
-from .build_dataset import get_fourier_features
+from .features_fourier import get_fourier_features
 
 
 __all__ = ["build_dataset"]
