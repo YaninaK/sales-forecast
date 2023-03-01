@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import scipy.stats as st
 
+from .build_dataset import get_fourier_features
+
 
 __all__ = ["build_dataset"]
 
@@ -45,8 +47,9 @@ def get_features(
         clusters.shape[0], -1, clusters.shape[1]
     )
     X6 = np.moveaxis(X6, 1, 0)
+    X7 = get_fourier_features(clusters, X_scaled)[-time_seq, :, :]
 
-    return np.concatenate([X1, X2, X3, X4, X5, X6], axis=-1)
+    return np.concatenate([X1, X2, X3, X4, X5, X6, X7], axis=-1)
 
 
 def get_1st_differences(X_scaled: pd.DataFrame, periods=["D", "W", "M"]) -> np.array:
