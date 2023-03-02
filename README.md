@@ -6,7 +6,7 @@ Evaluation Metric - [Scaled Mean Absolute Error (sMAE)](https://en.wikipedia.org
 
 ## Content
 
-1. [EDA: omissions analysis & time series clustering](https://github.com/YaninaK/sales-forecast/blob/main/notebooks/01_EDA_omissions_clusters.ipynb)
+1. [EDA: omissions, time series clustering & Fourier transformations](https://github.com/YaninaK/sales-forecast/blob/main/notebooks/01_EDA_omissions_clusters.ipynb)
     * [EDA utilities](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/data/EDA_utilities.py)
     * [Johnson SU transformation](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/data/johnson_su_transformation.py) 
     * [Impute data](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/data/impute_data.py)
