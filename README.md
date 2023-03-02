@@ -26,3 +26,6 @@ Evaluation Metric - [Scaled Mean Absolute Error (sMAE)](https://en.wikipedia.org
     * [Train & save model](https://github.com/YaninaK/sales-forecast/blob/main/scripts/train_save_model.py)
     * [Save artifacts](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/models/save_artifacts.py)
     * [Serialize model](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/models/serialize.py)
+
+4. [Transformer model](https://github.com/YaninaK/sales-forecast/blob/main/notebooks/04_Transformer_model.ipynb)
+    * [Model architecture](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/models/model_TF.py)
