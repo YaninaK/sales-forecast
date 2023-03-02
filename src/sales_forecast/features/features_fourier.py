@@ -73,7 +73,7 @@ def fourier_transform(
         a = set(abs(composite_ts_FFT) * 1000 // 10 / 100)
         thresholds[i] = sorted(a, reverse=True)[:n]
 
-        ts[i] = decompose_ts(composite_ts_FFT, thresholds, False)
+        ts[i] = decompose_ts(composite_ts_FFT, thresholds[i], False)
 
     return thresholds, ts
 
