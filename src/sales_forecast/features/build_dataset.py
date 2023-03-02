@@ -46,7 +46,7 @@ def get_features(
         clusters.shape[0], -1, clusters.shape[1]
     )
     X6 = np.moveaxis(X6, 1, 0)
-    X7 = get_fourier_features(clusters, X_scaled)[-time_seq:, :, :]
+    X7 = get_fourier_features(X_scaled, clusters)[-time_seq:, :, :]
 
     return np.concatenate([X1, X2, X3, X4, X5, X6, X7], axis=-1)
 
