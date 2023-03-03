@@ -44,15 +44,16 @@ def get_model_TF(
     decoder_inputs = tf.keras.layers.RepeatVector(output_sequence_length)(
         encoder_outputs
     )
-    x = tf.keras.layers.TimeDistributed(
-        tf.keras.layers.Dense(input_shape[-1], activation="selu")
-    )(decoder_inputs)
+    x = decoder_inputs
     for k in range(n_blocks):
         x_old = x
         transformer_block = TransformerBlock(input_shape[-1])
         x = transformer_block(x)
         x = (1.0 - skip_connection_strength) * x + skip_connection_strength * x_old
-    decoder_outputs = x
+
+    decoder_outputs = tf.keras.layers.TimeDistributed(
+        tf.keras.layers.Dense(input_shape[-1], activation="selu")
+    )(x)
 
     model = tf.keras.models.Model(encoder_inputs, decoder_outputs)
 
