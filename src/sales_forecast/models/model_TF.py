@@ -14,7 +14,7 @@ OUTPUT_SEQUENCE_LENGTH = 27
 
 N_HEADS = 3
 EMBED_DIM = 64
-FF_DIM = 150
+FF_DIM = 256
 DROPOUT_RATE = 0.1
 
 
@@ -32,8 +32,7 @@ def get_model_TF(
         skip_connection_strength = SKIP_CONNECTION_STRENGTH
 
     encoder_inputs = tf.keras.layers.Input(input_shape)
-    x = encoder_inputs
-    x = tf.keras.layers.LayerNormalization(epsilon=1e-6)(x)
+    x = tf.keras.layers.LayerNormalization(epsilon=1e-6)(encoder_inputs)
     for k in range(n_blocks):
         x_old = x
         transformer_block = TransformerBlock(input_shape[-1])
@@ -44,16 +43,9 @@ def get_model_TF(
     decoder_inputs = tf.keras.layers.RepeatVector(output_sequence_length)(
         encoder_outputs
     )
-    x = decoder_inputs
-    for k in range(n_blocks):
-        x_old = x
-        transformer_block = TransformerBlock(input_shape[-1])
-        x = transformer_block(x)
-        x = (1.0 - skip_connection_strength) * x + skip_connection_strength * x_old
-
     decoder_outputs = tf.keras.layers.TimeDistributed(
-        tf.keras.layers.Dense(input_shape[-1], activation="selu")
-    )(x)
+        tf.keras.layers.Dense(input_shape[-1])
+    )(decoder_inputs)
 
     model = tf.keras.models.Model(encoder_inputs, decoder_outputs)
 
