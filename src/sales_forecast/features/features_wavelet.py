@@ -22,7 +22,7 @@ def get_wavelet_features(X_scaled: pd.DataFrame, n_features: Optional[int] = Non
     scales = np.arange(1, n_features + 1)
 
     for i in range(X_scaled.shape[1]):
-        [coefficients, _] = pywt.cwt(X_scaled[:, i], scales=scales, wavelet="cmor")
+        [coefficients, _] = pywt.cwt(X_scaled.iloc[:, i], scales=scales, wavelet="cmor")
         X[:, i, :] = coefficients.T
 
     return X
