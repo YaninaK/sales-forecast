@@ -40,7 +40,6 @@ def get_model_TF(
         x = (1.0 - skip_connection_strength) * x + skip_connection_strength * x_old
 
     decoder_inputs = tf.keras.layers.Reshape((output_sequence_length, -1))(x)
-
     decoder_outputs = tf.keras.layers.TimeDistributed(
         tf.keras.layers.Dense(input_shape[-1])
     )(decoder_inputs)
@@ -86,8 +85,8 @@ class TransformerBlock(tf.keras.layers.Layer):
     def call(self, inputs, training):
         attn_output = self.att(inputs, inputs)
         attn_output = self.dropout_1(attn_output, training=training)
-        out1 = self.layernorm_1(inputs + attn_output)
-        ffn_output = self.ffn(out1)
+        out_1 = self.layernorm_1(inputs + attn_output)
+        ffn_output = self.ffn(out_1)
         ffn_output = self.dropout_2(ffn_output, training=training)
 
-        return self.layernorm_2(out1 + ffn_output)
+        return self.layernorm_2(out_1 + ffn_output)
