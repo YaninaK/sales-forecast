@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-__all__ = ["get_fourier_features"]
+__all__ = ["generate_fourier_features"]
 
 logger = logging.getLogger()
 
@@ -31,6 +31,8 @@ def get_fourier_features(
 ):
     if selected_ts_diff is None:
         selected_ts_diff = SELECTED_TS_DIFF
+
+    logging.info("Generating fourier features ...")
 
     n_features = len(selected_ts_diff[0]) + 1
     X = np.empty((X_scaled.shape[0], X_scaled.shape[1], n_features))
