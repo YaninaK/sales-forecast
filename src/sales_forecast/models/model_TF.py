@@ -38,11 +38,9 @@ def get_model_TF(
         transformer_block = TransformerBlock(input_shape[-1])
         x = transformer_block(x)
         x = (1.0 - skip_connection_strength) * x + skip_connection_strength * x_old
-    encoder_outputs = tf.keras.layers.Flatten()(x)
 
-    decoder_inputs = tf.keras.layers.RepeatVector(output_sequence_length)(
-        encoder_outputs
-    )
+    decoder_inputs = tf.keras.layers.Reshape((output_sequence_length, -1))(x)
+
     decoder_outputs = tf.keras.layers.TimeDistributed(
         tf.keras.layers.Dense(input_shape[-1])
     )(decoder_inputs)
