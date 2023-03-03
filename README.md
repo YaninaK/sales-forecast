@@ -15,7 +15,8 @@ Evaluation Metric - [Scaled Mean Absolute Error (sMAE)](https://en.wikipedia.org
     * [Fourier transformations](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/features/features_fourier.py)     
 
 2. [Feature extraction](https://github.com/YaninaK/sales-forecast/blob/main/notebooks/02_Feature_extraction.ipynb)    
-    * [Feature engineering](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/features/build_dataset.py)    
+    * [Feature engineering](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/features/build_dataset.py) 
+    * [Wavelet transformations](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/features/features_wavelet.py)   
     * [Train-validation split](https://github.com/YaninaK/sales-forecast/blob/main/src/sales_forecast/data/validation.py)       
     
 3. [Baseline model - LSTM](https://github.com/YaninaK/sales-forecast/blob/main/notebooks/03_Baseline_model.ipynb)
